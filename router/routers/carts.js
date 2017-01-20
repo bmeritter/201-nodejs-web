@@ -1,14 +1,13 @@
 import {Router} from 'express';
-import ItemController from '../../controller/ItemController';
-
+import CartController from '../../controller/CartController';
 
 const router = Router();
-const itemCtrl = new ItemController();
+const cartCml = new CartController();
 
-router.get('/', itemCtrl.getAll);
-router.get('/:itemId', itemCtrl.getItem);
-router.delete('/:itemId', itemCtrl.deleteItem);
-router.post('/', itemCtrl.addItem);
-router.put('/:itemId', itemCtrl.updateItem);
+router.get('/', cartCml.getAll);
+router.get('/:cartId', cartCml.getCart);
+router.delete('/:cartId', cartCml.deleteCart);
+router.post('/', cartCml.addCart);
+router.put('/:cartId', cartCml.updateCart);
 
 export default router;
