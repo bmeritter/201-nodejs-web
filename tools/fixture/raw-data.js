@@ -20,14 +20,14 @@ export default {
     '_id': '587f0f2586653d19297d40c6',
     items: [
       {
-        itemId: '587f0f2586653d19297d40c2',
+        item: '587f0f2586653d19297d40c2',
         count: 1
       }, {
-        itemId: '587f0f2586653d19297d40c3',
+        item: '587f0f2586653d19297d40c3',
         count: 1
       },
       {
-        itemId: '587f0f2586653d19297d40c4',
+        item: '587f0f2586653d19297d40c4',
         count: 1
       }
     ]
