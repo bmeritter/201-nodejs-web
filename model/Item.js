@@ -6,7 +6,12 @@ const Schema = mongoose.Schema;
 
 const ItemSchema = new Schema({
   name: String,
-  price: Number
+  price: Number,
+  totalCount: Number,
+  categoryId: {
+    type: Schema.ObjectId,
+    ref: 'category'
+  }
 });
 
 const Item = mongoose.model('Item', ItemSchema);
