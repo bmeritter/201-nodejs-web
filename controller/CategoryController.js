@@ -4,39 +4,21 @@ import Item from '../model/Item';
 
 export default class CategoryController {
   getAll(req, res, next) {
-    async.waterfall([
-      (done) => {
-        Category.find(done);
-      },
-      (data, done) => {
-        async.map(data[0].items, (item, cb) => {
-          Item.findById(item, (err, doc) => {
-            cb(null, doc);
-          });
-        }, done);
-      }], (err, data) => {
-      if (err)
+    Category.find((err, doc) => {
+      if (err) {
         return next(err);
-      res.send(data);
+      }
+      res.status(200).send(doc);
     });
   }
 
   getCategory(req, res, next) {
     const categoryId = req.params.categoryId;
-    async.waterfall([
-      (done) => {
-        Category.findById(categoryId, done);
-      },
-      (data, done) => {
-        async.map(data.items, (item, cb) => {
-          Item.findById(item, (err, doc) => {
-            cb(null, doc);
-          });
-        }, done);
-      }], (err, data) => {
-      if (err)
+    Category.find({'_id': categoryId}, (err, doc) => {
+      if (err) {
         return next(err);
-      res.send(data);
+      }
+      res.status(200).send(doc);
     });
   }
 

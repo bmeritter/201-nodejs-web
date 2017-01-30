@@ -1,6 +1,4 @@
 import Cart from '../model/Cart';
-import Item from '../model/Item';
-import async from 'async';
 
 export default class CartController {
   getAll(req, res, next) {
@@ -12,7 +10,7 @@ export default class CartController {
           return next(err);
         }
 
-        return res.send(doc);
+        res.status(200).send(doc);
       });
   }
 
@@ -25,7 +23,7 @@ export default class CartController {
           return next(err);
         }
 
-        return res.send(doc);
+        res.status(200).send(doc);
       })
   }
 
