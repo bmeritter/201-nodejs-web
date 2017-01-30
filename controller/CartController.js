@@ -5,40 +5,28 @@ import async from 'async';
 export default class CartController {
   getAll(req, res, next) {
 
-    async.waterfall([
-      (done) => {
-        Cart.find(done);
-      },
-      (data, done) => {
-        async.map(data[0].items, (item, cb) => {
-          Item.findById(item, (err, doc) => {
-            cb(null, doc);
-          });
-        }, done);
-      }], (err, data) => {
-      if (err)
-        return next(err);
-      res.send(data);
-    });
+    Cart.find({})
+      .populate('item')
+      .exec((err, doc) => {
+        if (err) {
+          return next(err);
+        }
+
+        return res.send(doc);
+      });
   }
 
   getCart(req, res, next) {
     const cartId = req.params.cartId;
-    async.waterfall([
-      (done) => {
-        Cart.findById(cartId, done);
-      },
-      (data, done) => {
-        async.map(data.items, (item, cb) => {
-          Item.findById(item, (err, doc) => {
-            cb(null, doc);
-          });
-        }, done);
-      }], (err, data) => {
-      if (err)
-        return next(err);
-      res.send(data);
-    });
+    Cart.findOne({'_id': cartId})
+      .populate('item')
+      .exec((err, doc) => {
+        if (err) {
+          return next(err);
+        }
+
+        return res.send(doc);
+      })
   }
 
   deleteCart(req, res, next) {
