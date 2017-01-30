@@ -2,20 +2,28 @@ import Item from '../model/Item';
 
 export default class ItemController {
   getAll(req, res, next) {
-    Item.find((err, doc) => {
-      if (err)
-        return next(err);
-      res.status(200).send(doc);
-    });
+    Item.find({})
+      .populate('category')
+      .exec((err, doc) => {
+        if (err) {
+          return next(err);
+        }
+
+        res.status(200).send(doc);
+      });
   }
 
   getItem(req, res, next) {
     const itemId = req.params.itemId;
-    Item.findById(itemId, (err, doc) => {
-      if (err)
-        return next(err);
-      res.status(200).send(doc);
-    });
+    Item.find({'_id': itemId})
+      .populate('category')
+      .exec((err, doc) => {
+        if (err) {
+          return next(err);
+        }
+
+        res.status(200).send(doc);
+      });
   }
 
   deleteItem(req, res, next) {
