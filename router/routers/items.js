@@ -5,9 +5,9 @@ const router = Router();
 const itemCtrl = new ItemController();
 
 router.get('/', itemCtrl.getAll);
-router.get('/:itemId', itemCtrl.getItem);
+router.get('/:itemId', itemCtrl.getOne);
 router.delete('/:itemId', itemCtrl.deleteItem);
-router.post('/', itemCtrl.addItem);
+router.post('/', itemCtrl.createItem);
 router.put('/:itemId', itemCtrl.updateItem);
 
 export default router;

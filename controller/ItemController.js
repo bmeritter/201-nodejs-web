@@ -13,7 +13,7 @@ export default class ItemController {
       });
   }
 
-  getItem(req, res, next) {
+  getOne(req, res, next) {
     const itemId = req.params.itemId;
     Item.find({'_id': itemId})
       .populate('category')
@@ -35,7 +35,7 @@ export default class ItemController {
     });
   }
 
-  addItem(req, res, next) {
+  createItem(req, res, next) {
     const data = req.body;
     console.log(req.body);
     new Item(data).save((err, doc) => {

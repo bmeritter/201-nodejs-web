@@ -14,7 +14,7 @@ export default class CartController {
       });
   }
 
-  getCart(req, res, next) {
+  getOne(req, res, next) {
     const cartId = req.params.cartId;
     Cart.findOne({'_id': cartId})
       .populate('item')
@@ -36,7 +36,7 @@ export default class CartController {
     });
   }
 
-  addCart(req, res, next) {
+  createCart(req, res, next) {
     const data = req.body;
     new Cart(data).save((err, doc) => {
       if (err)
