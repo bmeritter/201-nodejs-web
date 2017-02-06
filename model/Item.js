@@ -7,7 +7,6 @@ const Schema = mongoose.Schema;
 const ItemSchema = new Schema({
   name: String,
   price: Number,
-  totalCount: Number,
   categoryId: {
     type: Schema.ObjectId,
     ref: 'category'
