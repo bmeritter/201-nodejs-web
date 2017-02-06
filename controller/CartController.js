@@ -1,6 +1,6 @@
-import Cart from '../model/Cart';
+const Cart = require('../model/Cart');
 
-export default class CartController {
+class CartController {
   getAll(req, res, next) {
     Cart.find({})
       .populate('items.item')
@@ -51,3 +51,5 @@ export default class CartController {
   }
 
 }
+
+module.exports = CartController;

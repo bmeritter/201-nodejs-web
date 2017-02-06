@@ -1,6 +1,6 @@
-import Item from '../model/Item';
+const Item = require('../model/Item');
 
-export default class ItemController {
+class ItemController {
   getAll(req, res, next) {
     Item.find({})
       .populate('categoryId')
@@ -53,3 +53,5 @@ export default class ItemController {
     });
   }
 }
+
+module.exports = ItemController;

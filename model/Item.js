@@ -1,7 +1,4 @@
-/**
- * Created by ritter on 17-1-18.
- */
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ItemSchema = new Schema({
@@ -15,4 +12,4 @@ const ItemSchema = new Schema({
 
 const Item = mongoose.model('Item', ItemSchema);
 
-export default Item;
+module.exports = Item;

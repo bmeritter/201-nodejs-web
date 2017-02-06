@@ -1,8 +1,8 @@
-import mogoose from 'mongoose';
-import rawData from './fixture/raw-data';
-import Item from '../model/Item';
-import Category from '../model/Category';
-import Cart from '../model/Cart';
+const mogoose = require('mongoose');
+const rawData = require('./fixture/raw-data');
+const Item = require('../model/Item');
+const Category = require('../model/Category');
+const Cart = require('../model/Cart');
 
 const modelMap = {
   Item,

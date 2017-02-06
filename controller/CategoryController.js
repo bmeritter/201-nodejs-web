@@ -1,6 +1,6 @@
-import Category from '../model/Category';
+const Category = require('../model/Category');
 
-export default class CategoryController {
+class CategoryController {
   getAll(req, res, next) {
     Category.find((err, doc) => {
       if (err) {
@@ -48,3 +48,5 @@ export default class CategoryController {
 
 
 }
+
+module.exports = CategoryController;
