@@ -26,7 +26,7 @@ export default class ItemController {
       });
   }
 
-  deleteItem(req, res, next) {
+  delete(req, res, next) {
     const itemId = req.params.itemId;
     Item.remove({'_id': itemId}, (err, doc) => {
       if (err)

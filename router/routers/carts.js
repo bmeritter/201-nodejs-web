@@ -6,7 +6,7 @@ const cartCml = new CartController();
 
 router.get('/', cartCml.getAll);
 router.get('/:cartId', cartCml.getOne);
-router.delete('/:cartId', cartCml.deleteCart);
+router.delete('/:cartId', cartCml.delete);
 router.post('/', cartCml.createCart);
 router.put('/:cartId', cartCml.updateCart);
 

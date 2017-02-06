@@ -27,7 +27,7 @@ export default class CartController {
       })
   }
 
-  deleteCart(req, res, next) {
+  delete(req, res, next) {
     const cartId = req.params.cartId;
     Cart.remove({'_id': cartId}, (err, doc) => {
       if (err)

@@ -6,7 +6,7 @@ const itemCtrl = new ItemController();
 
 router.get('/', itemCtrl.getAll);
 router.get('/:itemId', itemCtrl.getOne);
-router.delete('/:itemId', itemCtrl.deleteItem);
+router.delete('/:itemId', itemCtrl.delete);
 router.post('/', itemCtrl.createItem);
 router.put('/:itemId', itemCtrl.updateItem);
 

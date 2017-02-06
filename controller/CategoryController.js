@@ -12,7 +12,7 @@ export default class CategoryController {
     });
   }
 
-  getCategory(req, res, next) {
+  getOne(req, res, next) {
     const categoryId = req.params.categoryId;
     Category.find({'_id': categoryId}, (err, doc) => {
       if (err) {
@@ -22,7 +22,7 @@ export default class CategoryController {
     });
   }
 
-  deleteCategory(req, res, next) {
+  delete(req, res, next) {
     const categoryId = req.params.categoryId;
     Category.remove({'_id': categoryId}, (err, doc) => {
       if (err)
@@ -31,7 +31,7 @@ export default class CategoryController {
     });
   }
 
-  addCategory(req, res, next) {
+  createCategory(req, res, next) {
     const data = req.body;
     new Category(data).save((err, doc) => {
       if (err)
