@@ -3,7 +3,7 @@ import Item from '../model/Item';
 export default class ItemController {
   getAll(req, res, next) {
     Item.find({})
-      .populate('category')
+      .populate('categoryId')
       .exec((err, doc) => {
         if (err) {
           return next(err);
@@ -15,8 +15,8 @@ export default class ItemController {
 
   getOne(req, res, next) {
     const itemId = req.params.itemId;
-    Item.find({'_id': itemId})
-      .populate('category')
+    Item.findById(itemId)
+      .populate('categoryId')
       .exec((err, doc) => {
         if (err) {
           return next(err);
@@ -37,7 +37,6 @@ export default class ItemController {
 
   createItem(req, res, next) {
     const data = req.body;
-    console.log(req.body);
     new Item(data).save((err, doc) => {
       if (err)
         return next(err);
@@ -47,8 +46,7 @@ export default class ItemController {
 
   updateItem(req, res, next) {
     const itemId = req.params.itemId;
-    const name = req.body.name;
-    Item.update({'_id': itemId}, {name}, (err, doc) => {
+    Item.update({'_id': itemId}, req.body, (err, doc) => {
       if (err)
         return next(err);
       res.status(204).send(doc);

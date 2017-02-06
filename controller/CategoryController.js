@@ -1,6 +1,4 @@
-import async from 'async';
 import Category from '../model/Category';
-import Item from '../model/Item';
 
 export default class CategoryController {
   getAll(req, res, next) {
@@ -14,7 +12,7 @@ export default class CategoryController {
 
   getOne(req, res, next) {
     const categoryId = req.params.categoryId;
-    Category.find({'_id': categoryId}, (err, doc) => {
+    Category.findById(categoryId, (err, doc) => {
       if (err) {
         return next(err);
       }
@@ -32,8 +30,7 @@ export default class CategoryController {
   }
 
   createCategory(req, res, next) {
-    const data = req.body;
-    new Category(data).save((err, doc) => {
+    new Category(req.body).save((err, doc) => {
       if (err)
         return next(err);
       res.status(201).send(doc);
@@ -42,8 +39,7 @@ export default class CategoryController {
 
   updateCategory(req, res, next) {
     const categoryId = req.params.categoryId;
-    const items = req.body.items;
-    Category.update({'_id': categoryId}, {items}, (err, doc) => {
+    Category.update({'_id': categoryId}, req.body, (err, doc) => {
       if (err)
         return next(err);
       res.status(204).send(doc);

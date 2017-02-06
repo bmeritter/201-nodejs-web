@@ -9,7 +9,7 @@ const ItemSchema = new Schema({
   price: Number,
   categoryId: {
     type: Schema.ObjectId,
-    ref: 'category'
+    ref: 'Category'
   }
 });
 

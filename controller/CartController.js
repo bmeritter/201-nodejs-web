@@ -2,27 +2,24 @@ import Cart from '../model/Cart';
 
 export default class CartController {
   getAll(req, res, next) {
-
     Cart.find({})
-      .populate('item')
+      .populate('items.item')
       .exec((err, doc) => {
         if (err) {
           return next(err);
         }
-
         res.status(200).send(doc);
       });
   }
 
   getOne(req, res, next) {
     const cartId = req.params.cartId;
-    Cart.findOne({'_id': cartId})
-      .populate('item')
+    Cart.findById(cartId)
+      .populate('items.item')
       .exec((err, doc) => {
         if (err) {
           return next(err);
         }
-
         res.status(200).send(doc);
       })
   }
@@ -37,8 +34,7 @@ export default class CartController {
   }
 
   createCart(req, res, next) {
-    const data = req.body;
-    new Cart(data).save((err, doc) => {
+    new Cart(req.body).save((err, doc) => {
       if (err)
         return next(err);
       res.status(201).send(doc);
@@ -47,8 +43,7 @@ export default class CartController {
 
   updateCart(req, res, next) {
     const cartId = req.params.cartId;
-    const items = req.body.items;
-    Cart.update({'_id': cartId}, {items}, (err, doc) => {
+    Cart.update({'_id': cartId}, req.body, (err, doc) => {
       if (err)
         return next(err);
       res.status(204).send(doc);
