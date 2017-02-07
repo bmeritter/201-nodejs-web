@@ -44,7 +44,7 @@ class CategoryController {
         return res.sendStatus(constant.FORBIDDEN);
       }
 
-      Category.remove({'_id': categoryId}, (err, doc) => {
+      Category.findOneAndRemove({'_id': categoryId}, (err, doc) => {
         if (!doc) {
           res.sendStatus(constant.NOT_FOUND);
         }

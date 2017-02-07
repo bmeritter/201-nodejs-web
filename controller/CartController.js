@@ -35,7 +35,7 @@ class CartController {
 
   delete(req, res, next) {
     const cartId = req.params.cartId;
-    Cart.remove({'_id': cartId}, (err, doc) => {
+    Cart.findOneAndRemove({'_id': cartId}, (err, doc) => {
       if (!doc) {
         res.sendStatus(constant.NOT_FOUND);
       }
