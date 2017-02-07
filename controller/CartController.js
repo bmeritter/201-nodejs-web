@@ -10,9 +10,6 @@ class CartController {
           return next(err);
         }
         Cart.count((error, data) => {
-          if (error) {
-            return next(error);
-          }
           if (!data) {
             res.status(constant.NOT_FOUND).send({item: doc, totalCount: data});
           }
@@ -45,7 +42,7 @@ class CartController {
       if (err) {
         return next(err);
       }
-      res.status(constant.NO_CONTENT).send(doc);
+      res.sendStatus(constant.NO_CONTENT);
     });
   }
 
@@ -64,7 +61,7 @@ class CartController {
       if (err) {
         return next(err);
       }
-      res.status(constant.NO_CONTENT).send(doc);
+      res.sendStatus(constant.NO_CONTENT);
     });
   }
 

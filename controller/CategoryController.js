@@ -51,10 +51,9 @@ class CategoryController {
         if (err) {
           return next(err);
         }
-        res.status(constant.NO_CONTENT).send(doc);
+        res.sendStatus(constant.NO_CONTENT);
       });
     });
-
   }
 
   create(req, res, next) {
@@ -72,7 +71,7 @@ class CategoryController {
       if (err) {
         return next(err);
       }
-      res.status(constant.NO_CONTENT).send(doc);
+      res.sendStatus(constant.NO_CONTENT);
     });
   }
 }

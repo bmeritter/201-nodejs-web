@@ -45,7 +45,7 @@ class ItemController {
       if (err) {
         return next(err);
       }
-      res.status(constant.NO_CONTENT).send(doc);
+      res.sendStatus(constant.NO_CONTENT);
     });
   }
 
@@ -65,7 +65,7 @@ class ItemController {
       if (err) {
         return next(err);
       }
-      res.status(constant.NO_CONTENT).send(doc);
+      res.sendStatus(constant.NO_CONTENT);
     });
   }
 }
