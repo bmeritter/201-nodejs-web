@@ -33,21 +33,9 @@ describe('CartContronller', () => {
           "userId": "1",
           "__v": 0,
           "items": [
-            {
-              "item": "587f0f2586653d19297d40c2",
-              "count": 1,
-              "_id": "5899cce9d9fd8719fe673436"
-            },
-            {
-              "item": "587f0f2586653d19297d40c3",
-              "count": 1,
-              "_id": "5899cce9d9fd8719fe673435"
-            },
-            {
-              "item": "587f0f2586653d19297d40c4",
-              "count": 1,
-              "_id": "5899cce9d9fd8719fe673434"
-            }
+            "items/587f0f2586653d19297d40c2",
+            "items/587f0f2586653d19297d40c3",
+            "items/587f0f2586653d19297d40c4"
           ]
         });
       })

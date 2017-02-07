@@ -28,7 +28,13 @@ class CartController {
       if (!doc) {
         return res.sendStatus(constant.httpCode.NOT_FOUND);
       }
-      return res.status(constant.httpCode.OK).send(doc);
+      let data = doc.toJSON();
+      let items = data.items;
+      items = items.map(({item}) => {
+        return `items/${item}`;
+      });
+      data.items = items;
+      return res.status(constant.httpCode.OK).send(data);
     })
   }
 
