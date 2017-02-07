@@ -36,7 +36,7 @@ class CategoryController {
   delete(req, res, next) {
     const categoryId = req.params.categoryId;
 
-    Item.find({categoryId}, (err, doc) => {
+    Item.findOne({categoryId}, (err, doc) => {
       if (err) {
         return next(err);
       }
