@@ -91,7 +91,7 @@ describe('CartContronller', () => {
       .end(done);
   });
 
-  it.only('DELETE /carts/:cartId should return 204', (done) => {
+  it('DELETE /carts/:cartId should return 204', (done) => {
     request
       .delete('/carts/587f0f2586653d19297d40c6')
       .expect(204)

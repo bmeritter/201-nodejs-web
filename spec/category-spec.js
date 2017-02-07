@@ -18,4 +18,19 @@ describe('CategoryContronller', () => {
       .end(done);
   });
 
+  it.only('GET /categories/:categoryId ', (done) => {
+    request
+      .get('/categories/587f0f2586653d19297d40c8')
+      .expect(200)
+      .expect((res) => {
+        res.body.should.eql({
+          "_id": "587f0f2586653d19297d40c8",
+          "name": "文具",
+          "__v": 0
+        });
+      })
+      .end(done)
+
+  });
+
 });
