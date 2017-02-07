@@ -49,4 +49,52 @@ describe('CartContronller', () => {
       .end(done)
   });
 
+  it('POST /carts should return uri', (done) => {
+    const cart = {
+      userId: '2',
+      items: [
+        {
+          count: 4,
+          item: '587f0f2586653d19297d40c2'
+        }
+      ]
+    };
+
+    request
+      .post('/carts')
+      .send(cart)
+      .expect(201)
+      .expect((res) => {
+        Cart.findOne(cart, (err, doc) => {
+          res.body.uri.should.equal(`carts/${doc._id}`);
+        })
+      })
+      .end(done);
+  });
+
+  it('PUT /carts/:cartId should return 204', (done) => {
+    const cartId = '587f0f2586653d19297d40c6';
+    const cart = {
+      userId: '9',
+      items: [
+        {
+          count: 4,
+          item: '587f0f2586653d19297d40c2'
+        }
+      ]
+    };
+
+    request
+      .put(`/carts/${cartId}`)
+      .send(cart)
+      .expect(204)
+      .end(done);
+  });
+
+  it.only('DELETE /carts/:cartId should return 204', (done) => {
+    request
+      .delete('/carts/587f0f2586653d19297d40c6')
+      .expect(204)
+      .end(done);
+  });
 });
