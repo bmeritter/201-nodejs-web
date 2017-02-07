@@ -41,11 +41,12 @@ class CategoryController {
       (done) => {
         Item.findOne({categoryId}, done);
       },
-      (doc, done) => {
-        if (doc) {
+      (data, done) => {
+        if (data) {
           done(true, null);
+        } else {
+          Category.findOneAndRemove({'_id': categoryId}, done);
         }
-        Category.findOneAndRemove({_id}, done);
       }
     ], (err) => {
       if (err === true) {
