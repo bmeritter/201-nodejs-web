@@ -29,6 +29,7 @@ class CategoryController {
       if (!doc) {
         return res.sendStatus(constant.httpCode.NOT_FOUND);
       }
+      doc
       return res.status(constant.httpCode.OK).send(doc);
     });
   }
@@ -36,23 +37,27 @@ class CategoryController {
   delete(req, res, next) {
     const categoryId = req.params.categoryId;
 
-    Item.findOne({categoryId}, (err, doc) => {
-      if (err) {
-        return next(err);
-      }
-      if (doc) {
-        return res.sendStatus(constant.httpCode.FORBIDDEN);
-      }
+    async.waterfall([
+      (done) => {
+        Item.findOne({categoryId}, (err, doc) => {
+          if (err) {
+            done('FORBIDDEN', null);
+          } else {
+            done(null, doc);
+          }
+        });
+      },
+      (data, done) => {
+        Category.findOneAndRemove({'_id': categoryId}, () => {
 
-      Category.findOneAndRemove({'_id': categoryId}, (err, doc) => {
-        if (err) {
-          return next(err);
-        }
-        if (!doc) {
-          return res.sendStatus(constant.httpCode.NOT_FOUND);
-        }
+        });
+      }
+    ], (err, data) => {
+      if (err === 'FORBIDDEN ') {
+        return res.sendStatus(constant.httpCode.FORBIDDEN);
+      } else {
         return res.sendStatus(constant.httpCode.NO_CONTENT);
-      });
+      }
     });
   }
 

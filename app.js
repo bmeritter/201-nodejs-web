@@ -7,9 +7,6 @@ const bodyParser = require('body-parser');
 mongoose.connect(config.get('mongoUri'));
 
 const app = express();
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
 
 app.get('/', (req, res) => {
   res.send({
@@ -17,6 +14,7 @@ app.get('/', (req, res) => {
   })
 });
 
+app.use(bodyParser.json());
 router(app);
 
 app.listen(config.get('httpPort'), () => {
