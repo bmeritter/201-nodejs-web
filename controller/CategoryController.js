@@ -1,4 +1,5 @@
 const Category = require('../model/Category');
+const constant = require('../config/constant');
 
 class CategoryController {
   getAll(req, res, next) {
@@ -6,7 +7,7 @@ class CategoryController {
       if (err) {
         return next(err);
       }
-      res.status(200).send(doc);
+      res.status(constant.OK).send(doc);
     });
   }
 
@@ -16,7 +17,7 @@ class CategoryController {
       if (err) {
         return next(err);
       }
-      res.status(200).send(doc);
+      res.status(constant.OK).send(doc);
     });
   }
 
@@ -25,7 +26,7 @@ class CategoryController {
     Category.remove({'_id': categoryId}, (err, doc) => {
       if (err)
         return next(err);
-      res.status(204).send(doc);
+      res.status(constant.NO_CONTENT).send(doc);
     });
   }
 
@@ -33,7 +34,7 @@ class CategoryController {
     new Category(req.body).save((err, doc) => {
       if (err)
         return next(err);
-      res.status(201).send(doc);
+      res.status(constant.CREATED).send(doc);
     });
   }
 
@@ -42,11 +43,9 @@ class CategoryController {
     Category.update({'_id': categoryId}, req.body, (err, doc) => {
       if (err)
         return next(err);
-      res.status(204).send(doc);
+      res.status(constant.NO_CONTENT).send(doc);
     });
   }
-
-
 }
 
 module.exports = CategoryController;

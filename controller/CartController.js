@@ -1,4 +1,5 @@
 const Cart = require('../model/Cart');
+const constant = require('../config/constant');
 
 class CartController {
   getAll(req, res, next) {
@@ -8,7 +9,7 @@ class CartController {
         if (err) {
           return next(err);
         }
-        res.status(200).send(doc);
+        res.status(constant.OK).send(doc);
       });
   }
 
@@ -20,7 +21,7 @@ class CartController {
         if (err) {
           return next(err);
         }
-        res.status(200).send(doc);
+        res.status(constant.OK).send(doc);
       })
   }
 
@@ -29,7 +30,7 @@ class CartController {
     Cart.remove({'_id': cartId}, (err, doc) => {
       if (err)
         return next(err);
-      res.status(204).send(doc);
+      res.status(constant.NO_CONTENT).send(doc);
     });
   }
 
@@ -37,7 +38,7 @@ class CartController {
     new Cart(req.body).save((err, doc) => {
       if (err)
         return next(err);
-      res.status(201).send(doc);
+      res.status(constant.CREATED).send(doc);
     });
   }
 
@@ -46,7 +47,7 @@ class CartController {
     Cart.update({'_id': cartId}, req.body, (err, doc) => {
       if (err)
         return next(err);
-      res.status(204).send(doc);
+      res.status(constant.NO_CONTENT).send(doc);
     });
   }
 

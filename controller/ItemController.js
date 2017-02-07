@@ -1,4 +1,5 @@
 const Item = require('../model/Item');
+const constant = require('../config/constant');
 
 class ItemController {
   getAll(req, res, next) {
@@ -8,8 +9,7 @@ class ItemController {
         if (err) {
           return next(err);
         }
-
-        res.status(200).send(doc);
+        res.status(constant.OK).send(doc);
       });
   }
 
@@ -21,8 +21,7 @@ class ItemController {
         if (err) {
           return next(err);
         }
-
-        res.status(200).send(doc);
+        res.status(constant.OK).send(doc);
       });
   }
 
@@ -31,7 +30,7 @@ class ItemController {
     Item.remove({'_id': itemId}, (err, doc) => {
       if (err)
         return next(err);
-      res.status(204).send(doc);
+      res.status(constant.NO_CONTENT).send(doc);
     });
   }
 
@@ -40,7 +39,7 @@ class ItemController {
     new Item(data).save((err, doc) => {
       if (err)
         return next(err);
-      res.status(201).send(doc);
+      res.status(constant.CREATED).send(doc);
     });
   }
 
@@ -49,7 +48,7 @@ class ItemController {
     Item.update({'_id': itemId}, req.body, (err, doc) => {
       if (err)
         return next(err);
-      res.status(204).send(doc);
+      res.status(constant.NO_CONTENT).send(doc);
     });
   }
 }
