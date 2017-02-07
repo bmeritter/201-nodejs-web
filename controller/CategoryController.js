@@ -1,4 +1,5 @@
 const Category = require('../model/Category');
+const Item = require('../model/Item');
 const constant = require('../config/constant');
 
 class CategoryController {
@@ -34,15 +35,26 @@ class CategoryController {
 
   delete(req, res, next) {
     const categoryId = req.params.categoryId;
-    Category.remove({'_id': categoryId}, (err, doc) => {
-      if (!doc) {
-        res.sendStatus(constant.NOT_FOUND);
-      }
+
+    Item.find({categoryId}, (err, doc) => {
       if (err) {
         return next(err);
       }
-      res.status(constant.NO_CONTENT).send(doc);
+      if (doc) {
+        return res.sendStatus(constant.FORBIDDEN);
+      }
+
+      Category.remove({'_id': categoryId}, (err, doc) => {
+        if (!doc) {
+          res.sendStatus(constant.NOT_FOUND);
+        }
+        if (err) {
+          return next(err);
+        }
+        res.status(constant.NO_CONTENT).send(doc);
+      });
     });
+
   }
 
   create(req, res, next) {
