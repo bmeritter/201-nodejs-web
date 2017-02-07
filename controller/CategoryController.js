@@ -14,6 +14,9 @@ class CategoryController {
   getOne(req, res, next) {
     const categoryId = req.params.categoryId;
     Category.findById(categoryId, (err, doc) => {
+      if (!doc) {
+        res.sendStatus(constant.NOT_FOUND);
+      }
       if (err) {
         return next(err);
       }
@@ -24,6 +27,9 @@ class CategoryController {
   delete(req, res, next) {
     const categoryId = req.params.categoryId;
     Category.remove({'_id': categoryId}, (err, doc) => {
+      if (!doc) {
+        res.sendStatus(constant.NOT_FOUND);
+      }
       if (err)
         return next(err);
       res.status(constant.NO_CONTENT).send(doc);

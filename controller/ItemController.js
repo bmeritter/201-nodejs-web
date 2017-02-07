@@ -18,6 +18,9 @@ class ItemController {
     Item.findById(itemId)
       .populate('categoryId')
       .exec((err, doc) => {
+        if (!doc) {
+          res.sendStatus(constant.NOT_FOUND);
+        }
         if (err) {
           return next(err);
         }
@@ -28,8 +31,12 @@ class ItemController {
   delete(req, res, next) {
     const itemId = req.params.itemId;
     Item.remove({'_id': itemId}, (err, doc) => {
-      if (err)
+      if (!doc) {
+        res.sendStatus(constant.NOT_FOUND);
+      }
+      if (err) {
         return next(err);
+      }
       res.status(constant.NO_CONTENT).send(doc);
     });
   }

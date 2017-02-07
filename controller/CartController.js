@@ -18,6 +18,9 @@ class CartController {
     Cart.findById(cartId)
       .populate('items.item')
       .exec((err, doc) => {
+        if (!doc) {
+          res.sendStatus(constant.NOT_FOUND);
+        }
         if (err) {
           return next(err);
         }
@@ -28,6 +31,9 @@ class CartController {
   delete(req, res, next) {
     const cartId = req.params.cartId;
     Cart.remove({'_id': cartId}, (err, doc) => {
+      if (!doc) {
+        res.sendStatus(constant.NOT_FOUND);
+      }
       if (err)
         return next(err);
       res.status(constant.NO_CONTENT).send(doc);
