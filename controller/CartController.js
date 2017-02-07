@@ -34,7 +34,7 @@ class CartController {
     });
   }
 
-  createCart(req, res, next) {
+  create(req, res, next) {
     new Cart(req.body).save((err, doc) => {
       if (err)
         return next(err);
@@ -42,7 +42,7 @@ class CartController {
     });
   }
 
-  updateCart(req, res, next) {
+  update(req, res, next) {
     const cartId = req.params.cartId;
     Cart.update({'_id': cartId}, req.body, (err, doc) => {
       if (err)

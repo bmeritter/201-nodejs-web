@@ -30,7 +30,7 @@ class CategoryController {
     });
   }
 
-  createCategory(req, res, next) {
+  create(req, res, next) {
     new Category(req.body).save((err, doc) => {
       if (err)
         return next(err);
@@ -38,7 +38,7 @@ class CategoryController {
     });
   }
 
-  updateCategory(req, res, next) {
+  update(req, res, next) {
     const categoryId = req.params.categoryId;
     Category.update({'_id': categoryId}, req.body, (err, doc) => {
       if (err)

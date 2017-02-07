@@ -34,7 +34,7 @@ class ItemController {
     });
   }
 
-  createItem(req, res, next) {
+  create(req, res, next) {
     const data = req.body;
     new Item(data).save((err, doc) => {
       if (err)
@@ -43,7 +43,7 @@ class ItemController {
     });
   }
 
-  updateItem(req, res, next) {
+  update(req, res, next) {
     const itemId = req.params.itemId;
     Item.update({'_id': itemId}, req.body, (err, doc) => {
       if (err)
