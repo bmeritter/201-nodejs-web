@@ -1,36 +1,35 @@
 const Cart = require('../model/cart');
 const constant = require('../config/constant');
+const async = require('async');
 
 class CartController {
   getAll(req, res, next) {
-    Cart.find({})
-      .populate('items.item')
-      .exec((err, doc) => {
-        if (err) {
-          return next(err);
-        }
-        Cart.count((error, data) => {
-          if (!data) {
-            return res.status(constant.httpCode.NOT_FOUND).send({item: doc, totalCount: data});
-          }
-          return res.status(constant.httpCode.OK).send({item: doc, totalCount: data});
-        });
-      });
+    async.series({
+      item: (cb) => {
+        Cart.find({}, cb);
+      },
+      totalCount: (cb) => {
+        Cart.count(cb);
+      }
+    }, (err, result) => {
+      if (err) {
+        return next(err);
+      }
+      return res.status(constant.httpCode.OK).send(result);
+    });
   }
 
   getOne(req, res, next) {
     const cartId = req.params.cartId;
-    Cart.findById(cartId)
-      .populate('items.item')
-      .exec((err, doc) => {
-        if (err) {
-          return next(err);
-        }
-        if (!doc) {
-          return res.sendStatus(constant.httpCode.NOT_FOUND);
-        }
-        return res.status(constant.httpCode.OK).send(doc);
-      })
+    Cart.findById(cartId, (err, doc) => {
+      if (err) {
+        return next(err);
+      }
+      if (!doc) {
+        return res.sendStatus(constant.httpCode.NOT_FOUND);
+      }
+      return res.status(constant.httpCode.OK).send(doc);
+    })
   }
 
   delete(req, res, next) {

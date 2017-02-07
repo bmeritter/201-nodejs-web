@@ -1,22 +1,22 @@
 const Category = require('../model/category');
 const Item = require('../model/item');
 const constant = require('../config/constant');
+const async = require('async');
 
 class CategoryController {
   getAll(req, res, next) {
-    Category.find((err, doc) => {
+    async.series({
+      item: (cb) => {
+        Category.find({}, cb);
+      },
+      totalCount: (cb) => {
+        Category.count(cb);
+      }
+    }, (err, result) => {
       if (err) {
         return next(err);
       }
-      Category.count((error, data) => {
-        if (error) {
-          return next(error);
-        }
-        if (!data) {
-          return res.status(constant.httpCode.NOT_FOUND).send({item: doc, totalCount: data});
-        }
-        return res.status(constant.httpCode.OK).send({item: doc, totalCount: data});
-      });
+      return res.status(constant.httpCode.OK).send(result);
     });
   }
 
