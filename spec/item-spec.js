@@ -5,7 +5,7 @@ const express = require('express');
 const app = require('../app');
 const request = supertest(app);
 
-const Item = require('../model/Item');
+const Item = require('../model/item');
 
 describe('ItemContronller', () => {
   it('GET /items should return all items', (done) => {

@@ -1,4 +1,4 @@
-const Item = require('../model/Item');
+const Item = require('../model/item');
 const constant = require('../config/constant');
 
 class ItemController {
@@ -14,9 +14,9 @@ class ItemController {
             return next(error);
           }
           if (!data) {
-            res.status(constant.NOT_FOUND).send({item: doc, totalCount: data});
+            return res.status(constant.NOT_FOUND).send({item: doc, totalCount: data});
           }
-          res.status(constant.OK).send({item: doc, totalCount: data});
+          return res.status(constant.OK).send({item: doc, totalCount: data});
         });
       });
   }
@@ -27,12 +27,12 @@ class ItemController {
       .populate('categoryId')
       .exec((err, doc) => {
         if (!doc) {
-          res.sendStatus(constant.NOT_FOUND);
+          return res.sendStatus(constant.NOT_FOUND);
         }
         if (err) {
           return next(err);
         }
-        res.status(constant.OK).send(doc);
+        return res.status(constant.OK).send(doc);
       });
   }
 
@@ -40,12 +40,12 @@ class ItemController {
     const itemId = req.params.itemId;
     Item.findOneAndRemove({'_id': itemId}, (err, doc) => {
       if (!doc) {
-        res.sendStatus(constant.NOT_FOUND);
+        return res.sendStatus(constant.NOT_FOUND);
       }
       if (err) {
         return next(err);
       }
-      res.sendStatus(constant.NO_CONTENT);
+      return res.sendStatus(constant.NO_CONTENT);
     });
   }
 
@@ -55,7 +55,7 @@ class ItemController {
       if (err) {
         return next(err);
       }
-      res.status(constant.CREATED).send({uri: 'items/' + doc._id});
+      return res.status(constant.CREATED).send({uri: 'items/' + doc._id});
     });
   }
 
@@ -68,7 +68,7 @@ class ItemController {
       if (err) {
         return next(err);
       }
-      res.sendStatus(constant.NO_CONTENT);
+      return res.sendStatus(constant.NO_CONTENT);
     });
   }
 }

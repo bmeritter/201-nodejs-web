@@ -1,4 +1,4 @@
-const Cart = require('../model/Cart');
+const Cart = require('../model/cart');
 const constant = require('../config/constant');
 
 class CartController {
@@ -11,9 +11,9 @@ class CartController {
         }
         Cart.count((error, data) => {
           if (!data) {
-            res.status(constant.NOT_FOUND).send({item: doc, totalCount: data});
+            return res.status(constant.NOT_FOUND).send({item: doc, totalCount: data});
           }
-          res.status(constant.OK).send({item: doc, totalCount: data});
+          return res.status(constant.OK).send({item: doc, totalCount: data});
         });
       });
   }
@@ -24,12 +24,12 @@ class CartController {
       .populate('items.item')
       .exec((err, doc) => {
         if (!doc) {
-          res.sendStatus(constant.NOT_FOUND);
+          return res.sendStatus(constant.NOT_FOUND);
         }
         if (err) {
           return next(err);
         }
-        res.status(constant.OK).send(doc);
+        return res.status(constant.OK).send(doc);
       })
   }
 
@@ -37,12 +37,12 @@ class CartController {
     const cartId = req.params.cartId;
     Cart.findOneAndRemove({'_id': cartId}, (err, doc) => {
       if (!doc) {
-        res.sendStatus(constant.NOT_FOUND);
+        return res.sendStatus(constant.NOT_FOUND);
       }
       if (err) {
         return next(err);
       }
-      res.sendStatus(constant.NO_CONTENT);
+      return res.sendStatus(constant.NO_CONTENT);
     });
   }
 
@@ -51,7 +51,7 @@ class CartController {
       if (err) {
         return next(err);
       }
-      res.status(constant.CREATED).send({uri: 'carts/' + doc._id});
+      return res.status(constant.CREATED).send({uri: 'carts/' + doc._id});
     });
   }
 
@@ -64,7 +64,7 @@ class CartController {
       if (err) {
         return next(err);
       }
-      res.sendStatus(constant.NO_CONTENT);
+      return res.sendStatus(constant.NO_CONTENT);
     });
   }
 

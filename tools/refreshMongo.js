@@ -1,7 +1,7 @@
 const mogoose = require('mongoose');
 const rawData = require('./fixture/raw-data');
-const Item = require('../model/Item');
-const Category = require('../model/Category');
+const Item = require('../model/item');
+const Category = require('../model/category');
 const Cart = require('../model/Cart');
 
 const modelMap = {

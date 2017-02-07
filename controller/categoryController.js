@@ -1,5 +1,5 @@
-const Category = require('../model/Category');
-const Item = require('../model/Item');
+const Category = require('../model/category');
+const Item = require('../model/item');
 const constant = require('../config/constant');
 
 class CategoryController {
@@ -13,9 +13,9 @@ class CategoryController {
           return next(error);
         }
         if (!data) {
-          res.status(constant.NOT_FOUND).send({item: doc, totalCount: data});
+          return res.status(constant.NOT_FOUND).send({item: doc, totalCount: data});
         }
-        res.status(constant.OK).send({item: doc, totalCount: data});
+        return res.status(constant.OK).send({item: doc, totalCount: data});
       });
     });
   }
@@ -24,12 +24,12 @@ class CategoryController {
     const categoryId = req.params.categoryId;
     Category.findById(categoryId, (err, doc) => {
       if (!doc) {
-        res.sendStatus(constant.NOT_FOUND);
+        return res.sendStatus(constant.NOT_FOUND);
       }
       if (err) {
         return next(err);
       }
-      res.status(constant.OK).send(doc);
+      return res.status(constant.OK).send(doc);
     });
   }
 
@@ -46,12 +46,12 @@ class CategoryController {
 
       Category.findOneAndRemove({'_id': categoryId}, (err, doc) => {
         if (!doc) {
-          res.sendStatus(constant.NOT_FOUND);
+          return res.sendStatus(constant.NOT_FOUND);
         }
         if (err) {
           return next(err);
         }
-        res.sendStatus(constant.NO_CONTENT);
+        return res.sendStatus(constant.NO_CONTENT);
       });
     });
   }
@@ -61,7 +61,7 @@ class CategoryController {
       if (err) {
         return next(err);
       }
-      res.status(constant.CREATED).send({uri: 'categories/' + doc._id});
+      return res.status(constant.CREATED).send({uri: 'categories/' + doc._id});
     });
   }
 
@@ -74,7 +74,7 @@ class CategoryController {
       if (err) {
         return next(err);
       }
-      res.sendStatus(constant.NO_CONTENT);
+      return res.sendStatus(constant.NO_CONTENT);
     });
   }
 }
