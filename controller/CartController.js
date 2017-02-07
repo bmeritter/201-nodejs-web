@@ -57,7 +57,10 @@ class CartController {
 
   update(req, res, next) {
     const cartId = req.params.cartId;
-    Cart.update({'_id': cartId}, req.body, (err, doc) => {
+    Cart.findOneAndUpdate({'_id': cartId}, req.body, (err, doc) => {
+      if (!doc) {
+        return res.sendStatus(constant.NOT_FOUND);
+      }
       if (err) {
         return next(err);
       }

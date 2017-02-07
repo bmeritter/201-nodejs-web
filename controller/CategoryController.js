@@ -67,7 +67,10 @@ class CategoryController {
 
   update(req, res, next) {
     const categoryId = req.params.categoryId;
-    Category.update({'_id': categoryId}, req.body, (err, doc) => {
+    Category.findOneAndUpdate({'_id': categoryId}, req.body, (err, doc) => {
+      if (!doc) {
+        return res.sendStatus(constant.NOT_FOUND);
+      }
       if (err) {
         return next(err);
       }
