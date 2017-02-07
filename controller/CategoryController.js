@@ -7,7 +7,15 @@ class CategoryController {
       if (err) {
         return next(err);
       }
-      res.status(constant.OK).send(doc);
+      Category.count((error, data) => {
+        if (error) {
+          return next(error);
+        }
+        if (!data) {
+          res.status(constant.NOT_FOUND).send({item: doc, totalCount: data});
+        }
+        res.status(constant.OK).send({item: doc, totalCount: data});
+      });
     });
   }
 
@@ -30,16 +38,18 @@ class CategoryController {
       if (!doc) {
         res.sendStatus(constant.NOT_FOUND);
       }
-      if (err)
+      if (err) {
         return next(err);
+      }
       res.status(constant.NO_CONTENT).send(doc);
     });
   }
 
   create(req, res, next) {
     new Category(req.body).save((err, doc) => {
-      if (err)
+      if (err) {
         return next(err);
+      }
       res.status(constant.CREATED).send({uri: 'categories/' + doc._id});
     });
   }
@@ -47,8 +57,9 @@ class CategoryController {
   update(req, res, next) {
     const categoryId = req.params.categoryId;
     Category.update({'_id': categoryId}, req.body, (err, doc) => {
-      if (err)
+      if (err) {
         return next(err);
+      }
       res.status(constant.NO_CONTENT).send(doc);
     });
   }

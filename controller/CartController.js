@@ -9,7 +9,15 @@ class CartController {
         if (err) {
           return next(err);
         }
-        res.status(constant.OK).send(doc);
+        Cart.count((error, data) => {
+          if (error) {
+            return next(error);
+          }
+          if (!data) {
+            res.status(constant.NOT_FOUND).send({item: doc, totalCount: data});
+          }
+          res.status(constant.OK).send({item: doc, totalCount: data});
+        });
       });
   }
 
@@ -34,16 +42,18 @@ class CartController {
       if (!doc) {
         res.sendStatus(constant.NOT_FOUND);
       }
-      if (err)
+      if (err) {
         return next(err);
+      }
       res.status(constant.NO_CONTENT).send(doc);
     });
   }
 
   create(req, res, next) {
     new Cart(req.body).save((err, doc) => {
-      if (err)
+      if (err) {
         return next(err);
+      }
       res.status(constant.CREATED).send({uri: 'carts/' + doc._id});
     });
   }
@@ -51,8 +61,9 @@ class CartController {
   update(req, res, next) {
     const cartId = req.params.cartId;
     Cart.update({'_id': cartId}, req.body, (err, doc) => {
-      if (err)
+      if (err) {
         return next(err);
+      }
       res.status(constant.NO_CONTENT).send(doc);
     });
   }
