@@ -6,8 +6,13 @@ const app = require('../app');
 const request = supertest(app);
 
 const Category = require('../model/category');
+const refresh = require('../tools/refreshMongo');
 
 describe('CategoryContronller', () => {
+  beforeEach(() => {
+    refresh();
+  });
+
   it('GET /categories should return all category', (done) => {
     request
       .get('/categories')

@@ -6,8 +6,13 @@ const app = require('../app');
 const request = supertest(app);
 
 const Item = require('../model/item');
+const refresh = require('../tools/refreshMongo');
 
 describe('ItemContronller', () => {
+  beforeEach(() => {
+    refresh();
+  });
+
   it('GET /items should return all items', (done) => {
     request
       .get('/items')

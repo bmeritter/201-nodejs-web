@@ -6,8 +6,13 @@ const app = require('../app');
 const request = supertest(app);
 
 const Cart = require('../model/cart');
+const refresh = require('../tools/refreshMongo');
 
 describe('CartContronller', () => {
+  beforeEach(() => {
+    refresh();
+  });
+
   it('GET /carts should return all carts', (done) => {
     request
       .get('/carts')
@@ -65,7 +70,7 @@ describe('CartContronller', () => {
       .send(cart)
       .expect(201)
       .expect((res) => {
-        Cart.findOne(cart, (err, doc) => {
+        Cart.findOne({userId: '2'}, (err, doc) => {
           res.body.uri.should.equal(`carts/${doc._id}`);
         })
       })
