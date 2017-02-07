@@ -11,9 +11,9 @@ class CartController {
         }
         Cart.count((error, data) => {
           if (!data) {
-            return res.status(constant.NOT_FOUND).send({item: doc, totalCount: data});
+            return res.status(constant.httpCode.NOT_FOUND).send({item: doc, totalCount: data});
           }
-          return res.status(constant.OK).send({item: doc, totalCount: data});
+          return res.status(constant.httpCode.OK).send({item: doc, totalCount: data});
         });
       });
   }
@@ -23,26 +23,26 @@ class CartController {
     Cart.findById(cartId)
       .populate('items.item')
       .exec((err, doc) => {
-        if (!doc) {
-          return res.sendStatus(constant.NOT_FOUND);
-        }
         if (err) {
           return next(err);
         }
-        return res.status(constant.OK).send(doc);
+        if (!doc) {
+          return res.sendStatus(constant.httpCode.NOT_FOUND);
+        }
+        return res.status(constant.httpCode.OK).send(doc);
       })
   }
 
   delete(req, res, next) {
     const cartId = req.params.cartId;
     Cart.findOneAndRemove({'_id': cartId}, (err, doc) => {
-      if (!doc) {
-        return res.sendStatus(constant.NOT_FOUND);
-      }
       if (err) {
         return next(err);
       }
-      return res.sendStatus(constant.NO_CONTENT);
+      if (!doc) {
+        return res.sendStatus(constant.httpCode.NOT_FOUND);
+      }
+      return res.sendStatus(constant.httpCode.NO_CONTENT);
     });
   }
 
@@ -51,20 +51,20 @@ class CartController {
       if (err) {
         return next(err);
       }
-      return res.status(constant.CREATED).send({uri: 'carts/' + doc._id});
+      return res.status(constant.httpCode.CREATED).send({uri: `carts/${doc._id}`});
     });
   }
 
   update(req, res, next) {
     const cartId = req.params.cartId;
     Cart.findOneAndUpdate({'_id': cartId}, req.body, (err, doc) => {
-      if (!doc) {
-        return res.sendStatus(constant.NOT_FOUND);
-      }
       if (err) {
         return next(err);
       }
-      return res.sendStatus(constant.NO_CONTENT);
+      if (!doc) {
+        return res.sendStatus(constant.httpCode.NOT_FOUND);
+      }
+      return res.sendStatus(constant.httpCode.NO_CONTENT);
     });
   }
 

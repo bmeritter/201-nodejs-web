@@ -13,9 +13,9 @@ class CategoryController {
           return next(error);
         }
         if (!data) {
-          return res.status(constant.NOT_FOUND).send({item: doc, totalCount: data});
+          return res.status(constant.httpCode.NOT_FOUND).send({item: doc, totalCount: data});
         }
-        return res.status(constant.OK).send({item: doc, totalCount: data});
+        return res.status(constant.httpCode.OK).send({item: doc, totalCount: data});
       });
     });
   }
@@ -23,13 +23,13 @@ class CategoryController {
   getOne(req, res, next) {
     const categoryId = req.params.categoryId;
     Category.findById(categoryId, (err, doc) => {
-      if (!doc) {
-        return res.sendStatus(constant.NOT_FOUND);
-      }
       if (err) {
         return next(err);
       }
-      return res.status(constant.OK).send(doc);
+      if (!doc) {
+        return res.sendStatus(constant.httpCode.NOT_FOUND);
+      }
+      return res.status(constant.httpCode.OK).send(doc);
     });
   }
 
@@ -41,17 +41,17 @@ class CategoryController {
         return next(err);
       }
       if (doc) {
-        return res.sendStatus(constant.FORBIDDEN);
+        return res.sendStatus(constant.httpCode.FORBIDDEN);
       }
 
       Category.findOneAndRemove({'_id': categoryId}, (err, doc) => {
-        if (!doc) {
-          return res.sendStatus(constant.NOT_FOUND);
-        }
         if (err) {
           return next(err);
         }
-        return res.sendStatus(constant.NO_CONTENT);
+        if (!doc) {
+          return res.sendStatus(constant.httpCode.NOT_FOUND);
+        }
+        return res.sendStatus(constant.httpCode.NO_CONTENT);
       });
     });
   }
@@ -61,20 +61,20 @@ class CategoryController {
       if (err) {
         return next(err);
       }
-      return res.status(constant.CREATED).send({uri: 'categories/' + doc._id});
+      return res.status(constant.httpCode.CREATED).send({uri: `categories/${doc._id}`});
     });
   }
 
   update(req, res, next) {
     const categoryId = req.params.categoryId;
     Category.findOneAndUpdate({'_id': categoryId}, req.body, (err, doc) => {
-      if (!doc) {
-        return res.sendStatus(constant.NOT_FOUND);
-      }
       if (err) {
         return next(err);
       }
-      return res.sendStatus(constant.NO_CONTENT);
+      if (!doc) {
+        return res.sendStatus(constant.httpCode.NOT_FOUND);
+      }
+      return res.sendStatus(constant.httpCode.NO_CONTENT);
     });
   }
 }

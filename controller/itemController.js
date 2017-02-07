@@ -14,9 +14,9 @@ class ItemController {
             return next(error);
           }
           if (!data) {
-            return res.status(constant.NOT_FOUND).send({item: doc, totalCount: data});
+            return res.status(constant.httpCode.NOT_FOUND).send({item: doc, totalCount: data});
           }
-          return res.status(constant.OK).send({item: doc, totalCount: data});
+          return res.status(constant.httpCode.OK).send({item: doc, totalCount: data});
         });
       });
   }
@@ -26,26 +26,26 @@ class ItemController {
     Item.findById(itemId)
       .populate('categoryId')
       .exec((err, doc) => {
-        if (!doc) {
-          return res.sendStatus(constant.NOT_FOUND);
-        }
         if (err) {
           return next(err);
         }
-        return res.status(constant.OK).send(doc);
+        if (!doc) {
+          return res.sendStatus(constant.httpCode.NOT_FOUND);
+        }
+        return res.status(constant.httpCode.OK).send(doc);
       });
   }
 
   delete(req, res, next) {
     const itemId = req.params.itemId;
     Item.findOneAndRemove({'_id': itemId}, (err, doc) => {
-      if (!doc) {
-        return res.sendStatus(constant.NOT_FOUND);
-      }
       if (err) {
         return next(err);
       }
-      return res.sendStatus(constant.NO_CONTENT);
+      if (!doc) {
+        return res.sendStatus(constant.httpCode.NOT_FOUND);
+      }
+      return res.sendStatus(constant.httpCode.NO_CONTENT);
     });
   }
 
@@ -55,20 +55,20 @@ class ItemController {
       if (err) {
         return next(err);
       }
-      return res.status(constant.CREATED).send({uri: 'items/' + doc._id});
+      return res.status(constant.httpCode.CREATED).send({uri: `items/${doc._id}`});
     });
   }
 
   update(req, res, next) {
     const itemId = req.params.itemId;
     Item.findOneAndUpdate({'_id': itemId}, req.body, (err, doc) => {
-      if (!doc) {
-        return res.sendStatus(constant.NOT_FOUND);
-      }
       if (err) {
         return next(err);
       }
-      return res.sendStatus(constant.NO_CONTENT);
+      if (!doc) {
+        return res.sendStatus(constant.httpCode.NOT_FOUND);
+      }
+      return res.sendStatus(constant.httpCode.NO_CONTENT);
     });
   }
 }
