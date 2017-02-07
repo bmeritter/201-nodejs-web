@@ -39,26 +39,23 @@ class CategoryController {
 
     async.waterfall([
       (done) => {
-        Item.findOne({categoryId}, (err, doc) => {
-          if (err) {
-            done('FORBIDDEN', null);
-          } else {
-            done(null, doc);
-          }
-        });
+        Item.findOne({categoryId}, done);
       },
-      (data, done) => {
-        Category.findOneAndRemove({'_id': categoryId}, () => {
-
-        });
+      (doc, done) => {
+        if (doc) {
+          done(true, null);
+        }
+        Category.findOneAndRemove({_id}, done);
       }
-    ], (err, data) => {
-      if (err === 'FORBIDDEN ') {
+    ], (err) => {
+      if (err === true) {
         return res.sendStatus(constant.httpCode.FORBIDDEN);
-      } else {
-        return res.sendStatus(constant.httpCode.NO_CONTENT);
       }
-    });
+      if (err) {
+        return next(err);
+      }
+      return res.sendStatus(constant.httpCode.NO_CONTENT);
+    })
   }
 
   create(req, res, next) {
