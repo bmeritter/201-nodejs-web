@@ -40,7 +40,7 @@ class CategoryController {
     new Category(req.body).save((err, doc) => {
       if (err)
         return next(err);
-      res.status(constant.CREATED).send(doc);
+      res.status(constant.CREATED).send({uri: 'categories/' + doc._id});
     });
   }
 

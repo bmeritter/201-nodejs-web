@@ -44,7 +44,7 @@ class CartController {
     new Cart(req.body).save((err, doc) => {
       if (err)
         return next(err);
-      res.status(constant.CREATED).send(doc);
+      res.status(constant.CREATED).send({uri: 'carts/' + doc._id});
     });
   }
 
