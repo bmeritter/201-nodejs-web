@@ -51,7 +51,7 @@ describe('ItemContronller', () => {
       .expect(201)
       .expect((res) => {
         Item.findOne(item, (err, doc) => {
-          res.body.uri.should.equal(`items/${doc._id}`);
+          res.body.uri.shoule.equal(`items/${doc._id}`);
         })
       })
       .end(done);
