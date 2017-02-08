@@ -68,7 +68,7 @@ class CategoryController {
   }
 
   create(req, res, next) {
-    new Category(req.body).save((err, doc) => {
+    Category.create(req.body, (err, doc) => {
       if (err) {
         return next(err);
       }

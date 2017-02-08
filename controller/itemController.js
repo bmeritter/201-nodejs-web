@@ -50,8 +50,7 @@ class ItemController {
   }
 
   create(req, res, next) {
-    const data = req.body;
-    new Item(data).save((err, doc) => {
+    Item.create(req.body, (err, doc) => {
       if (err) {
         return next(err);
       }
