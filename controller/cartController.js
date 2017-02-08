@@ -20,9 +20,8 @@ class CartController {
           let carts = doc.map((item) => {
             let cart = item.toJSON();
             let cartItems = loadItemUri(cart.items);
-            let data = cart;
-            data.items = cartItems;
-            return data;
+            cart.items = cartItems;
+            return cart;
           });
           cb(null, carts);
         });
