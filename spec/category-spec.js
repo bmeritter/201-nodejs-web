@@ -6,7 +6,7 @@ const app = require('../app');
 const request = supertest(app);
 
 const Category = require('../model/category');
-const refresh = require('../tools/refreshMongo');
+const refresh = require('../tool/refreshMongo');
 
 describe('CategoryContronller', () => {
   beforeEach(() => {
