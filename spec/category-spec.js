@@ -58,7 +58,7 @@ describe('CategoryContronller', () => {
   it('DELETE /categories', (done) => {
     request
       .delete('/categories/587f0f2586653d19297d40c8')
-      .expect(403)
+      .expect(400)
       .end(done)
   });
 

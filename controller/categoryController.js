@@ -55,7 +55,7 @@ class CategoryController {
       }
     ], (err) => {
       if (err === true) {
-        return res.sendStatus(constant.httpCode.FORBIDDEN);
+        return res.sendStatus(constant.httpCode.BAD_REQUEST);
       }
       if (err === false) {
         return res.sendStatus(constant.httpCode.NOT_FOUND);
