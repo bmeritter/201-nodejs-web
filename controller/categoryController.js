@@ -35,22 +35,30 @@ class CategoryController {
   }
 
   delete(req, res, next) {
-    const categoryId = req.params.categoryId;
+    const category = req.params.category;
 
     async.waterfall([
       (done) => {
-        Item.findOne({categoryId}, done);
+        Item.find({category}, done);
       },
       (data, done) => {
         if (data) {
           done(true, null);
         } else {
-          Category.findOneAndRemove({'_id': categoryId}, done);
+          Category.findOneAndRemove({'_id': category}, (err, doc) => {
+            if (!doc) {
+              return done(false, null);
+            }
+            done(err, doc);
+          });
         }
       }
     ], (err) => {
       if (err === true) {
         return res.sendStatus(constant.httpCode.FORBIDDEN);
+      }
+      if (err === false) {
+        return res.sendStatus(constant.httpCode.NOT_FOUND);
       }
       if (err) {
         return next(err);

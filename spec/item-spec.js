@@ -32,7 +32,7 @@ describe('ItemContronller', () => {
           "_id": "587f0f2586653d19297d40c2",
           "name": "钢笔",
           "price": 12,
-          "categoryId": {
+          "category": {
             "_id": "587f0f2586653d19297d40c8",
             "name": "文具",
             "__v": 0
@@ -47,7 +47,7 @@ describe('ItemContronller', () => {
     const item = {
       name: 'test',
       price: 45,
-      categoryId: '587f0f2586653d19297d40c8'
+      category: '587f0f2586653d19297d40c8'
     };
 
     request
@@ -76,7 +76,7 @@ describe('ItemContronller', () => {
     const item = {
       name: 'test6',
       price: 34,
-      categoryId: '587f0f2586653d19297d40c8'
+      category: '587f0f2586653d19297d40c8'
     };
     request
       .put(`/items/${itemId}`)
