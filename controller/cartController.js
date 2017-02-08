@@ -19,8 +19,7 @@ class CartController {
 
           let carts = doc.map((item) => {
             let cart = item.toJSON();
-            let cartItems = loadItemUri(cart.items);
-            cart.items = cartItems;
+            cart.items = loadItemUri(cart.items);
             return cart;
           });
           cb(null, carts);
@@ -47,9 +46,9 @@ class CartController {
         return res.sendStatus(constant.httpCode.NOT_FOUND);
       }
       let data = doc.toJSON();
-      let items = data.items;
-      items = loadItemUri(items);
-      data.items = items;
+      let items = doc.items;
+      data.items = loadItemUri(items);
+
       return res.status(constant.httpCode.OK).send(data);
     })
   }

@@ -20,6 +20,7 @@ module.exports = function refresh() {
       modelMap[v].create(rawData[v], () => {
         docs = docs.filter(doc => doc !== v);
         if (docs.length === 0) {
+          // console.log('refreshMongo success')
           // process.exit(0);
         }
       })
