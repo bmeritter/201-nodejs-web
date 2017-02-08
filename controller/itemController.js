@@ -5,7 +5,7 @@ const async = require('async');
 class ItemController {
   getAll(req, res, next) {
     async.series({
-      item: (cb) => {
+      items: (cb) => {
         Item.find({})
           .populate('category')
           .exec(cb)

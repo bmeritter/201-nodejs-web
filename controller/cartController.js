@@ -11,7 +11,7 @@ const loadItemUri = (items) => {
 class CartController {
   getAll(req, res, next) {
     async.series({
-      item: (cb) => {
+      items: (cb) => {
         Cart.find({}, (err, doc) => {
           if (err) {
             return next(err);

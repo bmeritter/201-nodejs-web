@@ -6,7 +6,7 @@ const async = require('async');
 class CategoryController {
   getAll(req, res, next) {
     async.series({
-      item: (cb) => {
+      items: (cb) => {
         Category.find({}, cb);
       },
       totalCount: (cb) => {

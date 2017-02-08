@@ -19,7 +19,7 @@ describe('CartContronller', () => {
       .expect(200)
       .expect((res) => {
         res.body.totalCount.should.equal(1);
-        res.body.item.length.should.equal(1);
+        res.body.items.length.should.equal(1);
       })
       .end(done);
   });
