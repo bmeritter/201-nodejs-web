@@ -29,7 +29,7 @@ class CategoryController {
       if (!doc) {
         return res.sendStatus(constant.httpCode.NOT_FOUND);
       }
-      doc
+
       return res.status(constant.httpCode.OK).send(doc);
     });
   }
