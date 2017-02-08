@@ -2,11 +2,30 @@ const Cart = require('../model/cart');
 const constant = require('../config/constant');
 const async = require('async');
 
+const loadItemUri = (items) => {
+  return items = items.map(({count, item}) => {
+    return {uri: `items/${item}`, count};
+  });
+};
+
 class CartController {
   getAll(req, res, next) {
     async.series({
       item: (cb) => {
-        Cart.find({}, cb);
+        Cart.find({}, (err, doc) => {
+          if (err) {
+            return next(err);
+          }
+
+          let carts = doc.map((item) => {
+            let cart = item.toJSON();
+            let cartItems = loadItemUri(cart.items);
+            let data = cart;
+            data.items = cartItems;
+            return data;
+          });
+          cb(null, carts);
+        });
       },
       totalCount: (cb) => {
         Cart.count(cb);
@@ -30,9 +49,7 @@ class CartController {
       }
       let data = doc.toJSON();
       let items = data.items;
-      items = items.map(({item}) => {
-        return `items/${item}`;
-      });
+      items = loadItemUri(items);
       data.items = items;
       return res.status(constant.httpCode.OK).send(data);
     })

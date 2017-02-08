@@ -32,11 +32,16 @@ describe('CartContronller', () => {
           "_id": "587f0f2586653d19297d40c6",
           "userId": "1",
           "__v": 0,
-          "items": [
-            "items/587f0f2586653d19297d40c2",
-            "items/587f0f2586653d19297d40c3",
-            "items/587f0f2586653d19297d40c4"
-          ]
+          "items": [{
+            "uri": "items/587f0f2586653d19297d40c2",
+            "count": 1
+          }, {
+            "uri": "items/587f0f2586653d19297d40c3",
+            "count": 1
+          }, {
+            "uri": "items/587f0f2586653d19297d40c4",
+            "count": 1
+          }]
         });
       })
       .end(done)
