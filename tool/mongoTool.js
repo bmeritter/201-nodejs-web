@@ -12,7 +12,13 @@ const modelMap = {
 
 let docs = Object.keys(rawData);
 
-mogoose.connect('mongodb://localhost/supermarket');
+mogoose.connect('mongodb://localhost/supermarket', (err) => {
+  if (err) {
+    console.log('connect error');
+  } else {
+    console.log('connect success');
+  }
+});
 
 Object.keys(rawData).forEach((v) => {
   modelMap[v].remove(() => {
