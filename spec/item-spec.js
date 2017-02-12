@@ -9,9 +9,6 @@ const Item = require('../model/item');
 const refresh = require('../tool/refreshMongo');
 
 describe('ItemContronller', () => {
-  beforeEach(() => {
-    refresh();
-  });
 
   it('GET /items should return all items', (done) => {
     request

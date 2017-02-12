@@ -9,9 +9,6 @@ const Category = require('../model/category');
 const refresh = require('../tool/refreshMongo');
 
 describe('CategoryContronller', () => {
-  beforeEach(() => {
-    refresh();
-  });
 
   it('GET /categories should return all category', (done) => {
     request
