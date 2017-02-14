@@ -10,9 +10,7 @@ const refresh = require('../tool/refreshMongo');
 
 beforeEach(() => {
   refresh(() => {
-    mongoose.connection.close(function () {
-      process.exit(0);
-    });
+    process.exit(0);
   });
 });
 

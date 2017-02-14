@@ -52,14 +52,14 @@ describe('CategoryContronller', () => {
       .end(done);
   });
 
-  it('DELETE /categories', (done) => {
+  it('DELETE /categories/:categoryId', (done) => {
     request
-      .delete('/categories/587f0f2586653d19297d40c8')
+      .delete('/categories/587f0f2586653d19297d40c9')
       .expect(400)
       .end(done)
   });
 
-  it('PUT /categories/categoryId shoule return 204', (done) => {
+  it('PUT /categories/:categoryId shoule return 204', (done) => {
     const category = {name: '测试分类'};
     request
       .put('/categories/587f0f2586653d19297d40c9')

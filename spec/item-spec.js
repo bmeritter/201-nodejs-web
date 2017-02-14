@@ -59,7 +59,7 @@ describe('ItemContronller', () => {
       .end(done);
   });
 
-  it('DELETE /items should return 204', (done) => {
+  it('DELETE /items/:itemId should return 204', (done) => {
     const itemId = '587f0f2586653d19297d40c2';
 
     request
