@@ -7,7 +7,7 @@
     "babel-node": "babel-node",
     "start": "nodemon --exec npm run babel-node -- app.js",
     "refreshMongo": "babel-node  ./tool/mongoTool.js",
-    "test": "./node_modules/.bin/mocha spec/*spec.js"
+    "test": "mocha --recursive spec/"
   },
   "author": "",
   "license": "ISC",
@@ -25,6 +25,7 @@
     "body-parser": "^1.16.0",
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
+    "recursive": "0.0.2",
     "supertest": "^3.0.0"
   }
 }
