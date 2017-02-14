@@ -35,7 +35,7 @@ class CategoryController {
   }
 
   delete(req, res, next) {
-    const category = req.params.category;
+    const category = req.params.categoryId;
 
     async.waterfall([
       (done) => {

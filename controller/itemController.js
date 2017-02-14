@@ -59,8 +59,7 @@ class ItemController {
   }
 
   update(req, res, next) {
-    const itemId = req.params.itemId;
-    Item.findOneAndUpdate({'_id': itemId}, req.body, (err, doc) => {
+    Item.findOneAndUpdate({'_id': req.params.itemId}, req.body, (err, doc) => {
       if (err) {
         return next(err);
       }
