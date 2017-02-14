@@ -8,15 +8,12 @@ const request = supertest(app);
 const Cart = require('../model/cart');
 const refresh = require('../tool/refreshMongo');
 
-beforeEach(() => {
-  refresh(() => {
-    process.exit(0);
-  });
-});
 
 describe('CartContronller', () => {
 
-
+  before((done) => {
+    refresh(done);
+  });
   it('GET /carts should return all carts', (done) => {
     request
       .get('/carts')
