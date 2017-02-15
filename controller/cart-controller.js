@@ -1,9 +1,10 @@
-const Cart = require('../model/cart');
-const constant = require('../config/constant');
 const async = require('async');
 
-const loadItemUri = (items) => {
-  return items = items.map(({count, item}) => {
+const Cart = require('../model/cart');
+const constant = require('../config/constant');
+
+function loadItemUri(items) {
+  return items.map(({count, item}) => {
     return {uri: `items/${item}`, count};
   });
 };
@@ -11,22 +12,22 @@ const loadItemUri = (items) => {
 class CartController {
   getAll(req, res, next) {
     async.series({
-      items: (cb) => {
-        Cart.find({}, (err, doc) => {
+      items: (done) => {
+        Cart.find({}, (err, docs) => {
           if (err) {
-            return next(err);
+            return done(err);
           }
 
-          let carts = doc.map((item) => {
-            let cart = item.toJSON();
+          let carts = docs.map((doc) => {
+            let cart = doc.toJSON();
             cart.items = loadItemUri(cart.items);
             return cart;
           });
-          cb(null, carts);
+          done(null, carts);
         });
       },
-      totalCount: (cb) => {
-        Cart.count(cb);
+      totalCount: (done) => {
+        Cart.count(done);
       }
     }, (err, result) => {
       if (err) {
@@ -55,7 +56,7 @@ class CartController {
 
   delete(req, res, next) {
     const cartId = req.params.cartId;
-    Cart.findOneAndRemove({'_id': cartId}, (err, doc) => {
+    Cart.findByIdAndRemove(cartId, (err, doc) => {
       if (err) {
         return next(err);
       }
@@ -77,7 +78,7 @@ class CartController {
 
   update(req, res, next) {
     const cartId = req.params.cartId;
-    Cart.findOneAndUpdate({'_id': cartId}, req.body, (err, doc) => {
+    Cart.findByIdAndUpdate(cartId, req.body, (err, doc) => {
       if (err) {
         return next(err);
       }

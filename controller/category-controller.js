@@ -1,16 +1,17 @@
+const async = require('async');
+
 const Category = require('../model/category');
 const Item = require('../model/item');
 const constant = require('../config/constant');
-const async = require('async');
 
 class CategoryController {
   getAll(req, res, next) {
     async.series({
-      items: (cb) => {
-        Category.find({}, cb);
+      items: (done) => {
+        Category.find({}, done);
       },
-      totalCount: (cb) => {
-        Category.count(cb);
+      totalCount: (done) => {
+        Category.count(done);
       }
     }, (err, result) => {
       if (err) {
@@ -45,7 +46,7 @@ class CategoryController {
         if (data) {
           done(true, null);
         } else {
-          Category.findOneAndRemove({'_id': category}, (err, doc) => {
+          Category.findByIdAndRemove(category, (err, doc) => {
             if (!doc) {
               return done(false, null);
             }
@@ -78,7 +79,7 @@ class CategoryController {
 
   update(req, res, next) {
     const categoryId = req.params.categoryId;
-    Category.findOneAndUpdate({'_id': categoryId}, req.body, (err, doc) => {
+    Category.findByIdAndUpdate(categoryId, req.body, (err, doc) => {
       if (err) {
         return next(err);
       }

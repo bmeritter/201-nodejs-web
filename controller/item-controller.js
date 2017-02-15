@@ -1,17 +1,18 @@
+const async = require('async');
+
 const Item = require('../model/item');
 const constant = require('../config/constant');
-const async = require('async');
 
 class ItemController {
   getAll(req, res, next) {
     async.series({
-      items: (cb) => {
+      items: (done) => {
         Item.find({})
           .populate('category')
-          .exec(cb)
+          .exec(done)
       },
-      totalCount: (cb) => {
-        Item.count(cb);
+      totalCount: (done) => {
+        Item.count(done);
       }
     }, (err, result) => {
       if (err) {
@@ -38,7 +39,7 @@ class ItemController {
 
   delete(req, res, next) {
     const itemId = req.params.itemId;
-    Item.findOneAndRemove({'_id': itemId}, (err, doc) => {
+    Item.findByIdAndRemove(itemId, (err, doc) => {
       if (err) {
         return next(err);
       }
@@ -59,7 +60,7 @@ class ItemController {
   }
 
   update(req, res, next) {
-    Item.findOneAndUpdate({'_id': req.params.itemId}, req.body, (err, doc) => {
+    Item.findByIdAndUpdate(req.params.itemId, req.body, (err, doc) => {
       if (err) {
         return next(err);
       }
