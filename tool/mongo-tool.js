@@ -1,5 +1,5 @@
 const mogoose = require('mongoose');
-const refreshMongo = require('./refreshMongo');
+const refreshMongo = require('./refresh-mongo');
 
 mogoose.connect('mongodb://localhost/supermarket', (err) => {
   if (err) {
