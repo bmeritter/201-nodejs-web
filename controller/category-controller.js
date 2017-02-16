@@ -42,8 +42,8 @@ class CategoryController {
       (done) => {
         Item.find({category}, done);
       },
-      (data, done) => {
-        if (data) {
+      (docs, done) => {
+        if (docs.length) {
           done(true, null);
         } else {
           Category.findByIdAndRemove(category, (err, doc) => {

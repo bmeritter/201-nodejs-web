@@ -3,7 +3,7 @@ const async = require('async');
 const Cart = require('../model/cart');
 const constant = require('../config/constant');
 
-function loadItemUri(items) {
+const loadItemUri = (items) => {
   return items.map(({count, item}) => {
     return {uri: `items/${item}`, count};
   });
