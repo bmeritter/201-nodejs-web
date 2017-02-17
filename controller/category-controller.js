@@ -40,10 +40,10 @@ class CategoryController {
 
     async.waterfall([
       (done) => {
-        Item.find({category}, done);
+        Item.findOne({category}, done);
       },
       (docs, done) => {
-        if (docs.length) {
+        if (docs) {
           done(true, null);
         } else {
           Category.findByIdAndRemove(category, (err, doc) => {

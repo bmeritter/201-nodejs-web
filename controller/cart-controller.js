@@ -3,7 +3,7 @@ const async = require('async');
 const Cart = require('../model/cart');
 const constant = require('../config/constant');
 
-const loadItemUri = (items) => {
+const mapItemToUri = (items) => {
   return items.map(({count, item}) => {
     return {uri: `items/${item}`, count};
   });
@@ -20,7 +20,7 @@ class CartController {
 
           let carts = docs.map((doc) => {
             let cart = doc.toJSON();
-            cart.items = loadItemUri(cart.items);
+            cart.items = mapItemToUri(cart.items);
             return cart;
           });
           done(null, carts);
@@ -48,7 +48,7 @@ class CartController {
       }
       let data = doc.toJSON();
       let items = doc.items;
-      data.items = loadItemUri(items);
+      data.items = mapItemToUri(items);
 
       return res.status(constant.httpCode.OK).send(data);
     })
